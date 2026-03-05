@@ -14,13 +14,13 @@ RespubLit.ai uses a modular architecture with separate components for proposal u
 
 ## Models
 
-### Tallulah (Mistral NeMo 12B, LoRA fine-tuned)
-Tallulah is the central interpretive model used in the reviewer discovery workflow for concept extraction, reranking, and final reviewer fit analysis.
+### PeerAtlas (Mistral NeMo 12B, LoRA fine-tuned)
+PeerAtlas is the central interpretive model used in the reviewer discovery workflow for concept extraction, reranking, and final reviewer fit analysis.
 
 ### Semantic embedding layer (configurable 3B/4B/7B embedding models)
 Used for semantic embeddings, similarity-based retrieval and early-stage semantic ranking. The embedding model can vary across peer-review campaigns depending on domain coverage needs, throughput constraints, and operational context.
 
-### Tallulah review report evaluation layer (Mistral NeMo 12B, LoRA fine-tuned)
+### PeerAtlas review report evaluation layer (Mistral NeMo 12B, LoRA fine-tuned)
 A separate fine-tuned module used to evaluate the quality of peer-review reports (not the proposal). It assesses technical rigor, constructive feedback, overall quality, relevance to abstract, bias signals (e.g., sentiment bias, score–text misalignment), grammar and typos, signals consistent with LLM-generated or fabricated reports.
 
 A lightweight, public demonstration model of this function is available for testing here:
@@ -28,7 +28,7 @@ https://huggingface.co/emreozelemre/RespubLitRRE-LoRA
 
 # Reviewer discovery workflow
 
-### Concept extraction (Tallulah)
+### Concept extraction (PeerAtlas)
 Proposal text is parsed and converted into a concept-level representation used to guide downstream retrieval and ranking.
 
 ### Semantic retrieval (embedding layer)
@@ -40,13 +40,13 @@ Candidate reviewers are derived from retrieved evidence and enriched with biblio
 ### Shortlist filtering and COI screening
 The candidate pool is reduced via structured ranking and operational filters, including conflict-of-interest screening.
 
-### Final reranking (Tallulah)
-Tallulah performs final fit assessment and reranks shortlisted candidates.
+### Final reranking (PeerAtlas)
+PeerAtlas performs final fit assessment and reranks shortlisted candidates.
 
 ### Output generation
 Results are exported in structured formats suitable for campaign operations and audit.
 
-## Tallulah Review report evaluation workflow
+## PeerAtlas Review report evaluation workflow
 
 A second fine-tuned Mistral NeMo 12B module is used specifically for review-text assessment. Inputs are peer-review reports (optionally paired with the proposal abstract for alignment checks). Outputs are structured quality assessments designed for meta-review, quality control, audit, and bias monitoring. The object of analysis is the review text. The review report evaluation module is purpose-built for heavy-duty tasks, capable of auditing thousands of submitted review reports at scale.
 
